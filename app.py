@@ -43,6 +43,7 @@ request_limit = 1000  # Set to OMDb's free daily limit
 # Function to fetch movie details from the OMDB API using multiple keys
 def movie_detail(movie_name):
     global api_keys, api_key_usage
+    
     # Loop through each API key until one works or limit is hit
     for api_key in api_keys:
         # Check if the current API key has reached its limit
@@ -50,14 +51,18 @@ def movie_detail(movie_name):
             url = f"http://www.omdbapi.com/?t={movie_name}&apikey={api_key}"
             response = requests.get(url)
             movie_data = json.loads(response.text)
-
+            
             # Increment the usage count for the current API key
             api_key_usage[api_key] += 1
-
+            
             # Check if the response contains the 'Title' key (indicating success)
-            if 'Title' in movie_data:
+            if response.status_code == 200 and 'Title' in movie_data:
                 return movie_data
-
+            else:
+                print(f"API key {api_key} failed or returned no results.")
+        else:
+            print(f"API key {api_key} has reached its request limit.")
+    
     # If no keys worked or all hit the limit, return default values
     return {
         'Title': 'N/A',

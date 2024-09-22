@@ -36,7 +36,8 @@ def recommend(movie):
         return ["Movie not found in the database."]
 
 # Function to fetch movie details from the OMDB API
-api_keys = ['7058f3e1', '38bad860', 'fd237622', 'e189e68f', 'b4d0b532']  # Add more keys as needed
+# List of API keys and their usage count
+api_keys = ['7058f3e1', '38bad860', 'fd237622', 'e189e68f', 'b4d0b532', '4bede092', 'a9e2d1c']  # Add more keys as needed
 api_key_usage = {key: 0 for key in api_keys}  # Dictionary to track API key usage
 request_limit = 1000  # Set to OMDb's free daily limit
 
@@ -58,6 +59,10 @@ def movie_detail(movie_name):
             # Check if the response contains the 'Title' key (indicating success)
             if response.status_code == 200 and 'Title' in movie_data:
                 return movie_data
+            else:
+                print(f"API key {api_key} failed or returned no results.")
+        else:
+            print(f"API key {api_key} has reached its request limit.")
     
     # If no keys worked or all hit the limit, return default values
     return {

@@ -59,10 +59,6 @@ def movie_detail(movie_name):
             # Check if the response contains the 'Title' key (indicating success)
             if response.status_code == 200 and 'Title' in movie_data:
                 return movie_data
-            else:
-                print(f"API key {api_key} failed or returned no results.")
-        else:
-            print(f"API key {api_key} has reached its request limit.")
     
     # If no keys worked or all hit the limit, return default values
     return {

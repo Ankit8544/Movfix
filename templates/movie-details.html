@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Movfix - Online Movies & TV Shows Template</title>
+        <title>Movfix</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicon.png') }}">
@@ -54,22 +54,21 @@
                                     </div>
                                     <div class="navbar-wrap main-menu d-none d-lg-flex">
                                         <ul class="navigation">
-                                            <li class="menu-item-has-children"><a href="index.html">Home</a></li>
-                                            <li class="menu-item-has-children"><a href="contact.html">contacts</a></li>
-                                            <li class="menu-item-has-children"><a href="#">Documantation</a></li>
-                                            <li class="menu-item-has-children"><a href="#">Blog</a></li>
-                                            <li class="menu-item-has-children"><a href="#">About</a></li>
+                                            <li class="menu-item-has-children"><a href="/">Home</a></li>
+                                            <li class="menu-item-has-children"><a href="/contact">contacts</a></li>
+                                            <li class="menu-item-has-children"><a href="https://github.com/Ankit8544/Movie-Recommandation-System">Documantation</a></li>
+                                            <li class="menu-item-has-children"><a href="https://ankitkumar875740.blogspot.com/">Blog</a></li>
+                                            <li class="menu-item-has-children"><a href="https://ankit-sharma-07.netlify.app/">About</a></li>
                                         </ul>
                                     </div>
                                     <div class="header-action d-none d-md-block">
                                         <ul>
                                             <li class="header-search"><a href="#" data-toggle="modal" data-target="#search-modal"><i class="fas fa-search"></i></a></li>
-                                            <li class="header-btn"><a href="#" class="btn">Hire Me</a></li>
+                                            <li class="header-btn"><a href="https://www.linkedin.com/in/ankit-sharma-ji/" class="btn">Hire Me</a></li>
                                         </ul>
                                     </div>
                                 </nav>
                             </div>
-
 
                             <!-- Mobile Menu  -->
                             <div class="mobile-menu">
@@ -82,11 +81,9 @@
                                     </div>
                                     <div class="social-links">
                                         <ul class="clearfix">
-                                            <li><a href="#"><span class="fab fa-twitter"></span></a></li>
-                                            <li><a href="#"><span class="fab fa-facebook-square"></span></a></li>
-                                            <li><a href="#"><span class="fab fa-pinterest-p"></span></a></li>
-                                            <li><a href="#"><span class="fab fa-instagram"></span></a></li>
-                                            <li><a href="#"><span class="fab fa-youtube"></span></a></li>
+                                            <li><a href="https://x.com/AnkitKr8544"><span class="fab fa-twitter"></span></a></li>
+                                            <li><a href="https://www.facebook.com/O.Sharma.Jii.07"><span class="fab fa-facebook-square"></span></a></li>
+                                            <li><a href="https://www.instagram.com/mr._.sharma.07/"><span class="fab fa-instagram"></span></a></li>
                                         </ul>
                                     </div>
                                 </nav>
@@ -166,7 +163,7 @@
                         <div class="col-xl-3 col-lg-4 col-sm-6">
                             <div class="movie-item mb-50">
                                 <div class="movie-poster">
-                                    <a href="{{ url_for('aaaa', movie_name=suggested_movie.title) }}"><img src="{{ suggested_movie.poster }}" alt="{{ suggested_movie.title }}"></a>
+                                    <a href="{{ url_for('movie', movie_name=suggested_movie.title) }}"><img src="{{ suggested_movie.poster }}" alt="{{ suggested_movie.title }}"></a>
                                 </div>
                                 <div class="movie-content">
                                     <div class="top">
@@ -190,28 +187,6 @@
                 </div>
             </section>
 
-            <!-- newsletter-area -->
-            <section class="newsletter-area newsletter-bg" data-background="{{ url_for('static', filename='img/bg/newsletter_bg.jpg') }}">
-                <div class="container">
-                    <div class="newsletter-inner-wrap">
-                        <div class="row align-items-center">
-                            <div class="col-lg-6">
-                                <div class="newsletter-content">
-                                    <h4>Trial Start First 30 Days.</h4>
-                                    <p>Enter your email to create or restart your membership.</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <form action="#" class="newsletter-form">
-                                    <input type="email" required placeholder="Enter your email">
-                                    <button class="btn">get started</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
         </main>
 
         <!-- footer-area -->
@@ -221,7 +196,7 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6">
                             <div class="copyright-text">
-                                <p>Copyright &copy; 2024. All Rights Reserved By <a href="index.html">Movflx</a></p>
+                                <p>Copyright &copy; 2024. All Rights Reserved By <a href="/">Movflx</a></p>
                             </div>
                         </div>
                     </div>

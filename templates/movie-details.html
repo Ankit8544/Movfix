@@ -55,7 +55,6 @@
                                     <div class="navbar-wrap main-menu d-none d-lg-flex">
                                         <ul class="navigation">
                                             <li class="menu-item-has-children"><a href="/">Home</a></li>
-                                            <li class="menu-item-has-children"><a href="/contact">contacts</a></li>
                                             <li class="menu-item-has-children"><a href="https://github.com/Ankit8544/Movie-Recommandation-System">Documantation</a></li>
                                             <li class="menu-item-has-children"><a href="https://ankitkumar875740.blogspot.com/">Blog</a></li>
                                             <li class="menu-item-has-children"><a href="https://ankit-sharma-07.netlify.app/">About</a></li>
@@ -94,13 +93,16 @@
                             <div class="modal fade" id="search-modal" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
-                                        <form>
-                                            <input type="text" placeholder="Search here...">
-                                            <button><i class="fas fa-search"></i></button>
+                                        <form action="/movie" method="get">
+                                            <input type="text" name="movie_name" placeholder="Search for a movie..." required>
+                                            <button type="submit">
+                                                <i class="fas fa-search"></i>
+                                            </button>
                                         </form>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>

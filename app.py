@@ -89,7 +89,7 @@ def home():
 # Route to display the home page with movie details
 @app.route('/movie')
 def movie():
-    movie_name = request.args.get('movie_name', 'Avatar')
+    movie_name = request.args.get('movie_name')
     # Get recommended movies list
     movie_suggestions_list = recommend(movie_name)
     movie_suggestions_list = movie_suggestions_list[:-1]
@@ -107,10 +107,6 @@ def movie():
         }
         movies_suggestions_data.append(movie)
     return render_template('movie-details.html', movie_data=movie_data, suggested_movies=movies_suggestions_data)
-
-@app.route('/contact')
-def contact():
-    return render_template('contact.html')
 
 if __name__ == "__main__":
     app.run()

@@ -51,18 +51,21 @@ def movie_detail(movie_name):
 
 @app.route('/')
 def home():
-    movie_titles = movie_list['title'].to_list()
+    movie_titles = movie_list['title'].to_list()  # Assuming movie_list is a DataFrame or similar
     random_movies = random.sample(movie_titles, 4)
 
     home_movies = []
 
     for i in random_movies:
+        # Fetch movie details only once to avoid multiple API calls
+        movie_data = movie_detail(i)
+
         movie = {
-            'title': movie_detail(i)['Title'],
-            'year': movie_detail(i)['Year'],
-            'runtime': movie_detail(i)['Runtime'],
-            'imdbrating': movie_detail(i)['imdbRating'],
-            'poster': movie_detail(i)['Poster']
+            'title': movie_data.get('Title', 'Unknown Title'),
+            'year': movie_data.get('Year', 'Unknown Year'),
+            'runtime': movie_data.get('Runtime', 'Unknown Runtime'),
+            'imdbrating': movie_data.get('imdbRating', 'N/A'),
+            'poster': movie_data.get('Poster', '/path/to/default/poster.jpg')  # Use default poster if not available
         }
         home_movies.append(movie)
 

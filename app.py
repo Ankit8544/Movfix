@@ -36,7 +36,7 @@ def recommend(movie):
         return ["Movie not found in the database."]
 
 # Function to fetch movie details from the OMDB API
-api_keys = ['7058f3e1', '38bad860', 'fd237622', 'e189e68f']  # Add more keys as needed
+api_keys = ['7058f3e1', '38bad860', 'fd237622', 'e189e68f', 'b4d0b532']  # Add more keys as needed
 api_key_usage = {key: 0 for key in api_keys}  # Dictionary to track API key usage
 request_limit = 1000  # Set to OMDb's free daily limit
 

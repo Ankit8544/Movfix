@@ -36,31 +36,30 @@ def recommend(movie):
         return ["Movie not found in the database."]
 
 # Function to fetch movie details from the OMDB API
-# List of API keys and their usage count
 api_keys = ['7058f3e1', '38bad860', 'fd237622', 'e189e68f', 'b4d0b532', '4bede092', 'a9e2d1c']  # Add more keys as needed
-api_key_usage = {key: 0 for key in api_keys}  # Dictionary to track API key usage
-request_limit = 1000  # Set to OMDb's free daily limit
 
 # Function to fetch movie details from the OMDB API using multiple keys
 def movie_detail(movie_name):
-    global api_keys, api_key_usage
-    
-    # Loop through each API key until one works or limit is hit
+    global api_keys
+    # Loop through each API key until one works
     for api_key in api_keys:
-        # Check if the current API key has reached its limit
-        if api_key_usage[api_key] < request_limit:
-            url = f"http://www.omdbapi.com/?t={movie_name}&apikey={api_key}"
+        url = f"http://www.omdbapi.com/?t={movie_name}&apikey={api_key}"
+        try:
             response = requests.get(url)
-            movie_data = json.loads(response.text)
-            
-            # Increment the usage count for the current API key
-            api_key_usage[api_key] += 1
-            
-            # Check if the response contains the 'Title' key (indicating success)
-            if response.status_code == 200 and 'Title' in movie_data:
-                return movie_data
-    
-    # If no keys worked or all hit the limit, return default values
+            # If request is successful, check the status code
+            if response.status_code == 200:
+                movie_data = response.json()
+                # Check if the 'Title' key exists in the response data
+                if 'Title' in movie_data:
+                    return movie_data
+                else:
+                    # Log if there is a problem with the API response
+                    print(f"API key {api_key} returned no 'Title' in the response. Response: {movie_data}")
+            else:
+                print(f"API key {api_key} failed with status code: {response.status_code}")
+        except requests.exceptions.RequestException as e:
+            print(f"Error fetching data with API key {api_key}: {e}")
+    # If no keys worked, return default values
     return {
         'Title': 'N/A',
         'Year': 'N/A',

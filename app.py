@@ -44,8 +44,12 @@ def movie_detail(movie_name):
     # Loop through each API key until one works
     for api_key in api_keys:
         url = f"http://www.omdbapi.com/?t={movie_name}&apikey={api_key}"
+        headers = {
+            'User-Agent': 'MovieApp/1.0 (ankitkumar875740l@example.com)'  # Replace with your app name and email
+            }
         try:
-            response = requests.get(url)
+            
+            response = requests.get(url, headers=headers)
             # If request is successful, check the status code
             if response.status_code == 200:
                 movie_data = response.json()

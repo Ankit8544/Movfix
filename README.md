@@ -1,8 +1,8 @@
 # **Movie Recommendation System** 🎬  
-An AI-based movie recommendation system that suggests movies based on content similarity and provides additional details like year, IMDb rating, runtime, and poster, utilizing the OMDb API. The project combines data pre-processing, machine learning, and web development, and has been deployed live using Flask on Render.
+An AI-based movie recommendation system that suggests movies based on content similarity and provides additional details like year, IMDb rating, runtime, and poster, utilizing the OMDb API. The project combines data pre-processing, machine learning, and web development, and has been deployed live using Flask.
 
 ### **Live Link** 🔗
-[Access the live app here](https://movie-recommandation-system-9njn.onrender.com/)
+[Access the live app here](https://movfix.onrender.com)
 
 ---
 
@@ -51,102 +51,114 @@ Given the large size of the trained model and data, it was saved as a **pickle f
 - **`movie_list.pkl`**: Contains the preprocessed movie data.
 - **`similarity.pkl`**: Contains the cosine similarity matrix.
 
-The files are retrieved from Google Drive in the Flask application using **`gdown`**.
-
 ---
 
 ## **Application Architecture**
 
-1. **Frontend**: The web interface is developed using **HTML** and **Jinja templates** within Flask. Users can search for a movie, get recommendations, and view movie details.
-2. **Backend**:
-   - **Flask Application** serves as the backend where user requests are handled.
-   - **Movie Recommendation Model**: The core recommendation engine is based on the content similarity model developed in the Jupyter Notebook.
-   - **OMDb API Integration**: Movie details (such as runtime, IMDb rating, and poster) are fetched dynamically from the **OMDb API**.
+The application consists of two main components:
+
+1. **Backend**:  
+   The backend is built using **Flask**, which handles the model predictions and serves movie recommendations. The pre-trained recommendation model, stored as a pickle file, is loaded into the application when it starts. The backend also communicates with the OMDb API to fetch additional movie details.
+
+2. **Frontend**:  
+   The frontend is rendered using **HTML** and **CSS** templates in Flask. It displays recommended movie results, details about the movies like IMDb rating, runtime, year, and posters fetched from OMDb.
 
 ---
 
 ## **Flask Integration & Deployment**
 
-The **Flask** app (`app.py`) is designed to serve the recommendation model. It handles:
-- Movie recommendations by computing cosine similarity.
-- Fetching additional movie information using **OMDb API**.
-  
-### **Deployment**  
-The Flask application is deployed on **Render**, making it accessible online. Render was chosen due to its free-tier services, ease of deployment, and ability to host Python-based web apps with minimal configuration.
+### **Flask Setup**
+The Flask web app serves the trained model and handles API requests to OMDb. It has two main routes:
 
-**Deployed Link**: [Movie Recommendation App](https://movie-recommandation-system-9njn.onrender.com/)
+- `/`: Displays four movies on the homepage with details like the title, year, runtime, IMDb rating, and poster.
+- `/movie`: Takes the movie name as input, recommends similar movies, and fetches their details from OMDb.
+
+### **Deployment**
+The application is deployed live on **Render**. Flask handles routing, fetching recommendations, and integrating OMDb movie details.
 
 ---
 
 ## **API Usage & Key Management**
 
-To fetch detailed information about the movies, such as IMDb rating, poster, and runtime, the app integrates with the **OMDb API**. Each API key has a daily request limit (1000 requests per day on the free tier).
+We use the **OMDb API** to retrieve detailed information about movies, such as the IMDb rating, year of release, runtime, and poster. To avoid reaching API limits, we rotate between multiple API keys.
 
-### **Why Multiple API Keys?**  
-Due to the limited number of daily requests allowed by the OMDb API, multiple API keys are managed in the application to avoid exceeding the daily quota. The keys are rotated, and their usage is tracked dynamically.
-
-- **API Key Management**: 
-   - The app tracks the usage count for each key and automatically switches to the next available key once the current one reaches its daily limit.
-   - This ensures smooth functionality and prevents the system from being interrupted by key exhaustion.
+### **API Keys**
+A list of API keys is maintained in the `app.py` file. The application checks which API key is valid by testing a request to fetch the movie 'Inception'. If the key returns valid data, it is used for all subsequent API requests. If the key fails, the next one in the list is tested.
 
 ---
 
 ## **Usage Instructions**
 
-1. **Homepage**: Displays random movie recommendations with details such as title, year, runtime, IMDb rating, and poster.
-2. **Search Functionality**: Users can search for a movie to get detailed information and 5 similar movies.
-3. **Recommendation Engine**: Upon selecting a movie, the recommendation system suggests 5 movies with similar content.
-4. **Movie Details**: The movie details, including IMDb rating and runtime, are fetched dynamically using the OMDb API.
+1. **Homepage**:  
+   - When you visit the homepage, you'll see a few popular movies with their details like the title, IMDb rating, year, runtime, and poster.
+   
+2. **Search Functionality**:  
+   - You can search for any movie title on the website, and the system will suggest similar movies based on content similarity.
+   
+3. **Movie Details**:  
+   - For each recommended movie, the app fetches details such as IMDb rating, year, runtime, and poster using the OMDb API.
 
 ---
 
 ## **Setup Guide**
 
-Follow these steps to set up the project locally:
+### **Requirements**
+- Python 3.x
+- Flask
+- Pandas, NumPy, Scikit-learn
+- CountVectorizer (from sklearn)
+- Requests library
+- Pickle library
+- OMDb API keys (free keys can be generated from the [OMDb website](http://www.omdbapi.com/apikey.aspx))
 
-### **1. Clone the Repository**  
-```bash
-git clone https://github.com/your-username/movie-recommendation-system.git
-cd movie-recommendation-system
-```
+### **Steps to Run Locally**
 
-### **2. Install the Required Libraries**  
-Install the dependencies listed in `requirements.txt`:
-```bash
-pip install -r requirements.txt
-```
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/movie-recommendation-system.git
+   cd movie-recommendation-system
+   ```
 
-### **3. Download the Pickle Files**  
-Since the pickle files are too large for GitHub, they are hosted on Google Drive. The Flask app uses `gdown` to download them automatically, but you can manually download them using the following links:
-- **Movie List**: [movie_list.pkl](https://drive.google.com/uc?export=download&id=1bzmDYhHCOCI0dRLF72-6rt3DstLGbXT7)
-- **Similarity Matrix**: [similarity.pkl](https://drive.google.com/uc?export=download&id=1xrVHcbqtvdX5J435kvJ1FkQP8bT_Hj0e)
+2. Install the required dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-### **4. Run the Application**
-Run the Flask application locally:
-```bash
-python app.py
-```
-Visit `http://127.0.0.1:5000/` in your browser to access the app.
+3. Download the **pickle** files (movie list and similarity matrix):
+   - **movie_list.pkl**: [Download Link](https://drive.google.com/file/d/1bzmDYhHCOCI0dRLF72-6rt3DstLGbXT7/view)
+   - **similarity.pkl**: [Download Link](https://drive.google.com/file/d/1xrVHcbqtvdX5J435kvJ1FkQP8bT_Hj0e/view)
+   
+   Save these files to the `artifacts/` folder in your project directory.
+
+4. Run the Flask app:
+   ```bash
+   python app.py
+   ```
+
+5. Visit the app in your browser at `http://127.0.0.1:5000`.
 
 ---
 
 ## **Technologies Used**
 
-- **Python**: Backend development, model training, and pre-processing.
-- **Pandas** & **NumPy**: For data manipulation and processing.
-- **Scikit-learn**: For vectorization and similarity computation.
-- **Flask**: Web framework to serve the model.
-- **HTML**, **CSS**, **Jinja**: For rendering the frontend.
-- **OMDb API**: To fetch movie metadata.
-- **Render**: For deploying the Flask application.
+- **Python**: For data preprocessing, model building, and backend logic.
+- **Flask**: To build and serve the web application.
+- **Pandas & NumPy**: For data manipulation and processing.
+- **Scikit-learn**: To perform vectorization and calculate content similarity.
+- **OMDb API**: For fetching movie details.
+- **HTML, CSS**: For creating the user interface.
+- **Google Drive & gdown**: To store and retrieve model files.
 
 ---
 
 ## **Future Enhancements**
 
-- **Improved Search Functionality**: Implement a fuzzy search algorithm to handle partial or incorrect movie titles.
-- **Real-time Movie Data**: Use live data from TMDB API for more up-to-date recommendations.
-- **User Profiles**: Add a feature for users to create profiles and receive personalized recommendations based on their watch history.
-- **Collaborative Filtering**: Expand the recommendation engine to include collaborative filtering techniques.
+1. **Collaborative Filtering**: Implementing collaborative filtering to complement the content-based approach, providing recommendations based on user ratings.
+   
+2. **Improved Movie Search**: Adding autocomplete functionality in the search bar for better user experience.
+
+3. **Real-time Movie Database**: Updating the dataset to include the latest movie releases, leveraging an external movie database API.
+
+4. **UI Enhancements**: Improving the UI to make it more user-friendly and visually appealing with dynamic features.
 
 ---

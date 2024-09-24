@@ -9,21 +9,49 @@ import random
 
 app = Flask(__name__)
 
-# Download the file
-url = 'https://drive.google.com/uc?export=download&id=1bzmDYhHCOCI0dRLF72-6rt3DstLGbXT7'
-output = 'movie_list.pkl'
-gdown.download(url, output, quiet=False)
-with open(output, 'rb') as f:
+import gdown
+import pickle
+import os
+
+# Function to download a file from Google Drive
+def download_file(url, output_path):
+    gdown.download(url, output_path, quiet=False)
+
+# Paths for the pickle files
+artifacts_folder = 'artifacts'
+if not os.path.exists(artifacts_folder):
+    os.makedirs(artifacts_folder)
+
+movie_list_path = os.path.join(artifacts_folder, 'movie_list.pkl')
+similarity_path = os.path.join(artifacts_folder, 'similarity.pkl')
+
+# URLs for the pickle files
+url_movie_list = 'https://drive.google.com/uc?export=download&id=1bzmDYhHCOCI0dRLF72-6rt3DstLGbXT7'
+url_similarity = 'https://drive.google.com/uc?id=1xrVHcbqtvdX5J435kvJ1FkQP8bT_Hj0e'
+
+# Check if movie_list.pkl exists, if not, download it
+if not os.path.exists(movie_list_path):
+    print(f"{movie_list_path} not found. Downloading...")
+    download_file(url_movie_list, movie_list_path)
+else:
+    print(f"{movie_list_path} found. No need to download.")
+
+# Load movie_list
+with open(movie_list_path, 'rb') as f:
     movie_list = pickle.load(f)
-os.remove(output)
-   
-# Download the similarity pickel file
-url = 'https://drive.google.com/uc?id=1xrVHcbqtvdX5J435kvJ1FkQP8bT_Hj0e'
-output = 'similarity.pkl'
-gdown.download(url, output, quiet=False)
-with open(output, 'rb') as f:
+
+# Check if similarity.pkl exists, if not, download it
+if not os.path.exists(similarity_path):
+    print(f"{similarity_path} not found. Downloading...")
+    download_file(url_similarity, similarity_path)
+else:
+    print(f"{similarity_path} found. No need to download.")
+
+# Load similarity
+with open(similarity_path, 'rb') as f:
     similarity = pickle.load(f)
-os.remove(output)
+
+print("Files checked, downloaded if necessary, and loaded successfully.")
 
 # Function to get movie recommendations
 def recommend(movie):

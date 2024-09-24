@@ -18,3 +18,8 @@ venv/
 # Ignore OS-generated files
 .DS_Store
 Thumbs.db
+
+
+# Ignore pickle files in the artifacts folder
+artifacts/movie_list.pkl
+artifacts/similarity.pkl

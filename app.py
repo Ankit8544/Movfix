@@ -9,10 +9,6 @@ import random
 
 app = Flask(__name__)
 
-import gdown
-import pickle
-import os
-
 # Function to download a file from Google Drive
 def download_file(url, output_path):
     gdown.download(url, output_path, quiet=False)

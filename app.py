@@ -105,8 +105,7 @@ def movie_detail(movie_name):
 
 @app.route('/')
 def home():
-    movie_titles = movie_list['title'].to_list()
-    first_four_movies = movie_titles[:4]
+    first_four_movies = ["Pirates of the Caribbean: At World's End", "Avatar", "The Matrix", "Inception"]
     home_movies = []
     for i in first_four_movies:
         movie_data = movie_detail(i)

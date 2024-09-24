@@ -103,20 +103,19 @@ def movie_detail(movie_name):
         'Poster': 'N/A'
     }
 
-
-
 @app.route('/')
 def home():
     movie_titles = movie_list['title'].to_list()
     random_movies = random.sample(movie_titles, 4)
     home_movies = []
     for i in random_movies:
+        movie_data = movie_detail(i)
         movie = {
-            'title': movie_detail(i)['Title'],
-            'year': movie_detail(i)['Year'],
-            'runtime': movie_detail(i)['Runtime'],
-            'imdbrating': movie_detail(i)['imdbRating'],
-            'poster': movie_detail(i)['Poster']
+            'title': movie_data['Title'],
+            'year': movie_data['Year'],
+            'runtime': movie_data['Runtime'],
+            'imdbrating': movie_data['imdbRating'],
+            'poster': movie_data['Poster']
         }
         home_movies.append(movie)
     return render_template('index.html', home_movies=home_movies)

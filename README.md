@@ -1,5 +1,5 @@
-# **Movie Recommendation System** 🎬  
-An Content based movie recommendation system that suggests movies based on content similarity and provides additional details like year, IMDb rating, runtime, and poster, utilizing the OMDb API. The project combines data pre-processing, machine learning, and web development, and has been deployed live using Flask.
+# **Movfix** 🎬  
+An Content based movie recommendation application that suggests movies based on content similarity and provides additional details like year, IMDb rating, runtime, and poster, utilizing the OMDb API. The project combines data pre-processing, machine learning, and web development, and has been deployed live using Flask.
 
 ### **Live Link** 🔗
 [Access the live app here](https://movfix.onrender.com)

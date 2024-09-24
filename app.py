@@ -36,34 +36,41 @@ def recommend(movie):
         return ["Movie not found in the database."]
 
 # Function to fetch movie details from the OMDB API
-api_keys = ['7058f3e1', '38bad860', 'fd237622', 'e189e68f', 'b4d0b532', '4bede092', 'a9e2d1c']  # Add more keys as needed
+api_keys = ['7058f3e1', '38bad860', 'fd237622', 'e189e68f', 'b4d0b532', '4bede092', 'a9e2d1c']
 
-# Function to fetch movie details from the OMDB API using multiple keys
-def movie_detail(movie_name):
-    global api_keys
-    # Loop through each API key until one works
+# Function to check which API key is valid (status code 200)
+def check_api_key():
+    test_movie = 'Inception'  # Using a test movie to check API key functionality
     for api_key in api_keys:
-        url = f"http://www.omdbapi.com/?t={movie_name}&apikey={api_key}"
-        headers = {
-            'User-Agent': 'MovieApp/1.0 (ankitkumar875740l@example.com)'  # Replace with your app name and email
-            }
+        url = f"http://www.omdbapi.com/?t={test_movie}&apikey={api_key}"
         try:
-            
-            response = requests.get(url, headers=headers)
-            # If request is successful, check the status code
+            response = requests.get(url)
             if response.status_code == 200:
                 movie_data = response.json()
-                # Check if the 'Title' key exists in the response data
+                # Ensure the API key returns valid movie data
+                if 'Title' in movie_data:
+                    print(f"Valid API key found: {api_key}")
+                    return api_key
+        except requests.exceptions.RequestException as e:
+            print(f"Error with API key {api_key}: {e}")
+    return None  # If no valid API key is found
+
+api_key = check_api_key()
+
+# Function to fetch movie details using the first valid API key
+def movie_detail(movie_name):
+    if api_key:
+        url = f"http://www.omdbapi.com/?t={movie_name}&apikey={api_key}"
+        try:
+            response = requests.get(url)
+            if response.status_code == 200:
+                movie_data = response.json()
                 if 'Title' in movie_data:
                     return movie_data
-                else:
-                    # Log if there is a problem with the API response
-                    print(f"API key {api_key} returned no 'Title' in the response. Response: {movie_data}")
-            else:
-                print(f"API key {api_key} failed with status code: {response.status_code}")
         except requests.exceptions.RequestException as e:
             print(f"Error fetching data with API key {api_key}: {e}")
-    # If no keys worked, return default values
+    
+    # Return default values if no valid response is obtained
     return {
         'Title': 'N/A',
         'Year': 'N/A',
@@ -71,6 +78,7 @@ def movie_detail(movie_name):
         'imdbRating': 'N/A',
         'Poster': 'N/A'
     }
+
 
 
 @app.route('/')

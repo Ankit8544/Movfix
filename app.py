@@ -106,9 +106,9 @@ def movie_detail(movie_name):
 @app.route('/')
 def home():
     movie_titles = movie_list['title'].to_list()
-    random_movies = random.sample(movie_titles, 4)
+    first_four_movies = movie_titles[:4]
     home_movies = []
-    for i in random_movies:
+    for i in first_four_movies:
         movie_data = movie_detail(i)
         movie = {
             'title': movie_data['Title'],

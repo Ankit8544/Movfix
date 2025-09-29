@@ -103,6 +103,7 @@ def movie_detail(movie_name):
         'Poster': 'N/A'
     }
 
+# Route to display the home page with some movies
 @app.route('/')
 def home():
     first_four_movies = ["Pirates of the Caribbean: At World's End", "Avatar", "The Matrix", "Inception"]
@@ -140,6 +141,11 @@ def movie():
         }
         movies_suggestions_data.append(movie)
     return render_template('movie-details.html', movie_data=movie_data, suggested_movies=movies_suggestions_data)
+
+# Health check route
+@app.route('/ping')
+def ping():
+    return "I'm alive!", 200
 
 if __name__ == "__main__":
     app.run()
